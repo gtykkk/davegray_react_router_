@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { Route, Switch, useHistory } from "react-router-dom";
+import { format } from 'date-fns'
 import Header from './Header'
 import Nav from './Nav.js'
 import Footer from './Footer'
@@ -38,6 +39,39 @@ function App() {
   ])
   const [search, setSearch] = useState('')
   const [searchResults, setSearchResults] = useState([])
+  const [postTitle, setPostTitle] = useState('')
+  const [postBody, setPostBody] = useState('')
+
+  const history = useHistory()
+
+  useEffect(() => {
+    const filteredResults = posts.filter(post => 
+      ((post.body).toLowerCase()).includes(search.toLowerCase())
+      || ((post.title).toLowerCase()).includes(search.toLowerCase())) 
+      
+      setSearchResults(filteredResults.reverse())
+  }, [posts, search])
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+
+    const id = posts.length ? posts[posts.length - 1].id + 1 : 1
+    const datetime = format(new Date(), 'MMMM dd, yyyy pp')
+    const newPost = { id, title: postTitle, datetime, body: postBody }
+    const allPosts = [ ...posts, newPost ]
+
+    setPosts(allPosts)
+    setPostTitle('')
+    setPostBody('')
+    history.push('/')
+  }
+
+  const handleDelete = (id) => {
+    const postsList = posts.filter(post => post.id !== id)
+    setPosts(postsList)
+
+    history.push('/')
+  }
 
   return (
     <div className="App">
@@ -51,14 +85,23 @@ function App() {
       <Switch>
         <Route exact path="/">
           <Home 
-            posts={posts}
+            posts={searchResults}
           />
         </Route>
         <Route exact path="/post">
-          <NewPost />
+          <NewPost 
+            handleSubmit={handleSubmit}
+            postTitle={postTitle}
+            setPostTitle={setPostTitle}
+            postBody={postBody}
+            setPostBody={setPostBody}
+          />
         </Route>
         <Route path="/post/:id">
-          <PostPage />
+          <PostPage 
+            posts={posts}
+            handleDelete={handleDelete}
+          />
         </Route>
         <Route path="/about" component={About} />
         <Route path="*" component={Missing} />
