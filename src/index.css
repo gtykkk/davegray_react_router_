@@ -200,21 +200,35 @@ body {
   cursor: pointer;
 }
 
+<<<<<<< HEAD
 .Missing p, .PostPage p, .NewPost p {
   margin-top: 1rem;
 }
 
 .PostPage button{
+=======
+.Missing h2, .PostPage h2, 
+.Missing p, .PostPage p {
+  margin-bottom: 1rem;
+}
+
+.PostPage button {
+>>>>>>> 70d9efcc14cdd8aa12ddac874779440237bab122
   height: 48px;
   min-width: 48px;
   border-radius: 0.25rem;
   padding: 0.5rem;
   font-size: 1rem;
+<<<<<<< HEAD
   margin-right: 0.5rem;
+=======
+  background-color: red;
+>>>>>>> 70d9efcc14cdd8aa12ddac874779440237bab122
   color: #fff;
   cursor: pointer;
 }
 
+<<<<<<< HEAD
 .deleteButton {
   background-color: red;
 }
@@ -223,6 +237,8 @@ body {
   background-color: #333;
 }
 
+=======
+>>>>>>> 70d9efcc14cdd8aa12ddac874779440237bab122
 .statusMsg {
   margin-top: 2rem;
 }
